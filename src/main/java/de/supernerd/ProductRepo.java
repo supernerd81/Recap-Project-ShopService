@@ -2,6 +2,7 @@ package de.supernerd;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ProductRepo {
     private List<Product> products;
@@ -15,17 +16,17 @@ public class ProductRepo {
         return products;
     }
 
-    public Product getProductById(String id) {
+    public Optional<Product> getProductById(String id) {
         for (Product product : products) {
             if (product.id().equals(id)) {
-                return product;
+                return Optional.of(product);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
-    public Product addProduct(Product newProduct) {
-        products.add(newProduct);
+    public Optional<Product> addProduct(Optional<Product> newProduct) {
+        products.add(newProduct.get());
         return newProduct;
     }
 

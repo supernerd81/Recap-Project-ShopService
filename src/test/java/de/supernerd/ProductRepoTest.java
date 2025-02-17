@@ -1,7 +1,10 @@
 package de.supernerd;
 
+import org.junit.jupiter.api.Assertions;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,10 +30,10 @@ class ProductRepoTest {
         ProductRepo repo = new ProductRepo();
 
         //WHEN
-        Product actual = repo.getProductById("1");
+        Optional<Product> actual = repo.getProductById("1");
 
         //THEN
-        Product expected = new Product("1", "Apfel");
+        Optional<Product> expected = Optional.of(new Product("1", "Apfel"));
         assertEquals(actual, expected);
     }
 
@@ -38,13 +41,13 @@ class ProductRepoTest {
     void addProduct() {
         //GIVEN
         ProductRepo repo = new ProductRepo();
-        Product newProduct = new Product("2", "Banane");
+        Optional<Product> newProduct = Optional.of(new Product("2", "Banane"));
 
         //WHEN
-        Product actual = repo.addProduct(newProduct);
+        Optional<Product> actual = repo.addProduct(newProduct);
 
         //THEN
-        Product expected = new Product("2", "Banane");
+        Optional<Product> expected = Optional.of(new Product("2", "Banane"));
         assertEquals(actual, expected);
         assertEquals(repo.getProductById("2"), expected);
     }
@@ -58,6 +61,6 @@ class ProductRepoTest {
         repo.removeProduct("1");
 
         //THEN
-        assertNull(repo.getProductById("1"));
+        Assertions.assertTrue(repo.getProductById("1").isEmpty());
     }
 }
