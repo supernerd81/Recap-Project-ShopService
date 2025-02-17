@@ -32,6 +32,6 @@ public class ShopService {
 
     public List<Order> getAllOrdersWithOrderStatus(OrderStatus orderStatus) {
 
-        return orderRepo.getOrders().stream().filter(n -> n.orderStatus() == OrderStatus.PROCESSING).toList();
+        return orderRepo.getOrders().stream().filter(n -> n.orderStatus() == orderStatus).toList();
     }
 }
