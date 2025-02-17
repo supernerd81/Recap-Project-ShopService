@@ -1,9 +1,13 @@
 package de.supernerd;
 
+import lombok.Data;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Data
 public class ShopService {
     private ProductRepo productRepo = new ProductRepo();
     private OrderRepo orderRepo = new OrderMapRepo();
@@ -22,5 +26,10 @@ public class ShopService {
         Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING);
 
         return orderRepo.addOrder(newOrder);
+    }
+
+    public List<Order> getAllOrdersWithOrderStatus(OrderStatus orderStatus) {
+
+        return orderRepo.getOrders().stream().filter(n -> n.orderStatus() == OrderStatus.PROCESSING).toList();
     }
 }
