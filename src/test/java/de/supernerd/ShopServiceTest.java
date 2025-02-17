@@ -78,4 +78,25 @@ class ShopServiceTest {
         assertNotNull(expected.id());
     }
 
+    @Test
+    void updateOrderLombokWithTest() {
+        //GIVEN
+        ShopService shopService = new ShopService();
+
+        Order order1 = new Order("-1", List.of(new Product("1", "Apfel"), new Product("2", "Birne")), OrderStatus.PROCESSING);
+        Order order2 = new Order("-2", List.of(new Product("1", "Apfel"), new Product("2", "Birne")), OrderStatus.PROCESSING);
+        Order order3 = new Order("-3", List.of(new Product("1", "Apfel"), new Product("2", "Birne")), OrderStatus.COMPLETED);
+        OrderRepo orderRepo = new OrderMapRepo();
+        orderRepo.addOrder(order1);
+        orderRepo.addOrder(order2);
+        orderRepo.addOrder(order3);
+
+        shopService.setOrderRepo(orderRepo);
+
+        Order actual = shopService.updateOrder("-2", OrderStatus.COMPLETED);
+
+        OrderStatus expected = OrderStatus.COMPLETED;
+
+        assertEquals(expected, actual.orderStatus());
+    }
 }

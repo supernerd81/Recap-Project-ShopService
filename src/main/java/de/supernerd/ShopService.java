@@ -2,7 +2,7 @@ package de.supernerd;
 
 import de.supernerd.exceptions.ProductNotFoundException;
 import lombok.Data;
-import lombok.Setter;
+import lombok.With;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +33,13 @@ public class ShopService {
     public List<Order> getAllOrdersWithOrderStatus(OrderStatus orderStatus) {
 
         return orderRepo.getOrders().stream().filter(n -> n.orderStatus() == orderStatus).toList();
+    }
+
+    public Order updateOrder(String id, OrderStatus orderStatus) {
+        Order orderOriginal = orderRepo.getOrderById(id);
+        Order orderCopy = orderOriginal.withOrderStatus(orderStatus);
+        System.out.println(orderCopy);
+
+        return orderCopy;
     }
 }
